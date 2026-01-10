@@ -24,7 +24,10 @@ function playRound(humanScore, computerScore) {
     const c=getComputerChoice()
     const h=getHumanChoice()
     
-    if (c === h) return "Pareggio!"
+    if (c === h) { 
+        console.log("Pareggio!")
+        return "p"
+    }
 
     const humanWon =
         (h === "Rock" && c === "Scissors") ||
@@ -47,13 +50,13 @@ function playGame() {
     let humanScore = 0
     let computerScore = 0
 
-    while (humanScore < 5 && computerScore < 5) {
+    for (let i=0; i <5; i++) {
         result = playRound()
         
-        if (result == "h") {
+        if (result === "h") {
             humanScore++
         }
-        if (result == "c") {
+        if (result === "c") {
             computerScore++
         }
         
