@@ -4,21 +4,18 @@ function getComputerChoice() {
     return choices[idCh]
 }
 
-function getHumanChoice() {
-   const input = prompt("Scegli: Rock, Paper o Scissors")
-   if (input === null) return null
-
-   const cleaned = input.trim().toLowerCase()
-
-   if (cleaned === "rock") return "Rock"
-   if (cleaned === "paper") return "Paper"
-   if (cleaned === "scissors") return "Scissors"
-
-   return null
+function getHumanChoice(e) {
+    const btn = e.target.closest(".buttons button")
+    if (!btn) return null
+    return btn.dataset.choice
 }
 
-// console.log(getHumanChoice())
-// console.log(getComputerChoice())
+document.querySelector(".buttons").addEventListener("click", (e) => {
+    const choice =getHumanChoice(e)
+    if (!choice) return
+    console.log(choice)
+})
+
 
 function playRound(humanScore, computerScore) {
     const c=getComputerChoice()
@@ -42,34 +39,30 @@ function playRound(humanScore, computerScore) {
         console.log("Hai perso!" + c + " batte " + h + ".")
         return result="c"
     }
-}
-// console.log(playRound())
-// console.log("Umano: " + humanScore + " PC: " + computerScore)
+// }
+// function playGame() {
+//     let humanScore = 0
+//     let computerScore = 0
 
-function playGame() {
-    let humanScore = 0
-    let computerScore = 0
-
-    for (let i=0; i <5; i++) {
-        result = playRound()
+//     for (let i=0; i <1000; i++) {
+//         result = playRound()
         
-        if (result === "h") {
-            humanScore++
-        }
-        if (result === "c") {
-            computerScore++
-        }
+//         if (result === "h") {
+//             humanScore++
+//         }
+//         if (result === "c") {
+//             computerScore++
+//         }
         
-        console.log("Umano: " + humanScore + " PC: " + computerScore)
-    }
+//         console.log("Umano: " + humanScore + " PC: " + computerScore)
+//     }
 
-    const winner = humanScore === 5 ? "Umano" : "PC"
+//     const winner = humanScore === 5 ? "Umano" : "PC"
 
-    console.log(`\n FIne partita! Vince: ${winner} (${humanScore} - ${computerScore})`)
+//     console.log(`\n Fine partita! Vince: ${winner} (${humanScore} - ${computerScore})`)
 
-    return {winner, humanScore, computerScore}
-}
+//     return {winner, humanScore, computerScore}
+// }
 
-console.log(playGame())
-
+// console.log(playGame())
 
