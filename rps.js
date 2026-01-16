@@ -10,19 +10,16 @@ function getHumanChoice(e) {
     return btn.dataset.choice
 }
 
-// document.querySelector(".buttons").addEventListener("click", (e) => {
-//     const choice =getHumanChoice(e)
-//     if (!choice) return
-//     console.log(choice)
-// })
-
 function playRound(h) {
     const c=getComputerChoice()
     const results = document.querySelector(".results")
+    const row = document.createElement("p")
 
     if (c === h) { 
-        results.textContent = "Pareggio!"
-        return "p"
+        row.textContent += "Pareggio!"
+        result="p"
+        results.appendChild(row)
+        return result
     }
 
     const humanWon =
@@ -31,70 +28,53 @@ function playRound(h) {
         (h === "Scissors" && c === "Paper")
     
     if (humanWon) {
-        results.textContent = `Hai vinto! ${h} batte ${c}`
-        return result="h"
+        row.textContent += `Hai vinto! ${h} batte ${c}`
+        result="h"
     }
     else {
-        results.textContent = `Hai perso! ${c} batte ${h}`
-        return result="c"
+        row.textContent += `Hai perso! ${c} batte ${h}`
+        result="c"
+    }
+    results.appendChild(row)
+    return result
+}
+
+function playGame(humanChoice) {
+    if (roundsPlayed >= MAX_ROUNDS) return
+
+    const result = playRound(humanChoice)
+    roundsPlayed++
+
+    if (result === "h") humanScore++
+    if (result === "c") computerScore++
+
+    if (roundsPlayed === MAX_ROUNDS) {
+        const results = document.querySelector(".results")
+        const final = document.createElement("p")
+
+        if (humanScore > computerScore) {
+            final.textContent = `Hai vinto la partita ${humanScore} a ${computerScore}!`
+        } else if (computerScore > humanScore) {
+            final.textContent = `Il computer ha vinto ${computerScore} a ${humanScore}.`
+        } else {
+            final.textContent = `Pareggio finale ${humanScore} a ${computerScore}.`
+        }
+
+        final.style.fontWeight = "bold"
+        results.appendChild(final)
     }
 }
+
+let humanScore = 0
+let computerScore = 0
+let roundsPlayed = 0
+const MAX_ROUNDS = 5
 
 document.querySelector(".buttons").addEventListener("click", (e) => {
     const choice =getHumanChoice(e)
     if (!choice) return
-    console.log(choice)
 
-    playRound(choice)
+    playGame(choice)
 })
 
-
-// function playRound(humanScore, computerScore) {
-//     const c=getComputerChoice()
-//     const h=getHumanChoice()
-    
-//     if (c === h) { 
-//         console.log("Pareggio!")
-//         return "p"
-//     }
-
-//     const humanWon =
-//         (h === "Rock" && c === "Scissors") ||
-//         (h === "Paper" && c === "Rock") ||
-//         (h === "Scissors" && c === "Paper")
-    
-//     if (humanWon) {
-//         console.log("Hai vinto! " + h + " batte " + c + ".")
-//         return result="h"
-//     }
-//     else {
-//         console.log("Hai perso!" + c + " batte " + h + ".")
-//         return result="c"
-//     }
-// }
-// function playGame() {
-//     let humanScore = 0
-//     let computerScore = 0
-
-//     for (let i=0; i <1000; i++) {
-//         result = playRound()
-        
-//         if (result === "h") {
-//             humanScore++
-//         }
-//         if (result === "c") {
-//             computerScore++
-//         }
-        
-//         console.log("Umano: " + humanScore + " PC: " + computerScore)
-//     }
-
-//     const winner = humanScore === 5 ? "Umano" : "PC"
-
-//     console.log(`\n Fine partita! Vince: ${winner} (${humanScore} - ${computerScore})`)
-
-//     return {winner, humanScore, computerScore}
-// }
-
-// console.log(playGame())
 
