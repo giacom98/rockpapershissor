@@ -10,19 +10,18 @@ function getHumanChoice(e) {
     return btn.dataset.choice
 }
 
-document.querySelector(".buttons").addEventListener("click", (e) => {
-    const choice =getHumanChoice(e)
-    if (!choice) return
-    console.log(choice)
-})
+// document.querySelector(".buttons").addEventListener("click", (e) => {
+//     const choice =getHumanChoice(e)
+//     if (!choice) return
+//     console.log(choice)
+// })
 
-
-function playRound(humanScore, computerScore) {
+function playRound(h) {
     const c=getComputerChoice()
-    const h=getHumanChoice()
-    
+    const results = document.querySelector(".results")
+
     if (c === h) { 
-        console.log("Pareggio!")
+        results.textContent = "Pareggio!"
         return "p"
     }
 
@@ -32,13 +31,46 @@ function playRound(humanScore, computerScore) {
         (h === "Scissors" && c === "Paper")
     
     if (humanWon) {
-        console.log("Hai vinto! " + h + " batte " + c + ".")
+        results.textContent = `Hai vinto! ${h} batte ${c}`
         return result="h"
     }
     else {
-        console.log("Hai perso!" + c + " batte " + h + ".")
+        results.textContent = `Hai perso! ${c} batte ${h}`
         return result="c"
     }
+}
+
+document.querySelector(".buttons").addEventListener("click", (e) => {
+    const choice =getHumanChoice(e)
+    if (!choice) return
+    console.log(choice)
+
+    playRound(choice)
+})
+
+
+// function playRound(humanScore, computerScore) {
+//     const c=getComputerChoice()
+//     const h=getHumanChoice()
+    
+//     if (c === h) { 
+//         console.log("Pareggio!")
+//         return "p"
+//     }
+
+//     const humanWon =
+//         (h === "Rock" && c === "Scissors") ||
+//         (h === "Paper" && c === "Rock") ||
+//         (h === "Scissors" && c === "Paper")
+    
+//     if (humanWon) {
+//         console.log("Hai vinto! " + h + " batte " + c + ".")
+//         return result="h"
+//     }
+//     else {
+//         console.log("Hai perso!" + c + " batte " + h + ".")
+//         return result="c"
+//     }
 // }
 // function playGame() {
 //     let humanScore = 0
